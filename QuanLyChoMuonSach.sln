@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35707.178 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GUI", "GUI\GUI.csproj", "{E689203F-74FC-4CAC-BA8B-646D86C16DD7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessLayer", "DataAccessLayer\DataAccessLayer.csproj", "{3DAC7607-A7D7-4CBA-BBC8-4FD3BA348CEE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogicLayer", "BusinessLogicLayer\BusinessLogicLayer.csproj", "{1F8A78AA-964E-4E8F-8F7C-24DE83F7BE91}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E689203F-74FC-4CAC-BA8B-646D86C16DD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E689203F-74FC-4CAC-BA8B-646D86C16DD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E689203F-74FC-4CAC-BA8B-646D86C16DD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E689203F-74FC-4CAC-BA8B-646D86C16DD7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3DAC7607-A7D7-4CBA-BBC8-4FD3BA348CEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DAC7607-A7D7-4CBA-BBC8-4FD3BA348CEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DAC7607-A7D7-4CBA-BBC8-4FD3BA348CEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DAC7607-A7D7-4CBA-BBC8-4FD3BA348CEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F8A78AA-964E-4E8F-8F7C-24DE83F7BE91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F8A78AA-964E-4E8F-8F7C-24DE83F7BE91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F8A78AA-964E-4E8F-8F7C-24DE83F7BE91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F8A78AA-964E-4E8F-8F7C-24DE83F7BE91}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
