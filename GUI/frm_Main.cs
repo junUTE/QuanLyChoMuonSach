@@ -11,7 +11,7 @@ namespace GUI
     public partial class frm_Main : Form
     {
 
-        private PhieuMuonDAL dal = new PhieuMuonDAL();
+        private ViewBLL dal = new ViewBLL();
         public frm_Main()
         {
 
@@ -91,6 +91,18 @@ namespace GUI
             lblDiaChi.Text ="Địa chỉ:" + tk.diaChi;
             lblNgaySinh.Text ="Ngày sinh: " + (tk.ngaySinh.HasValue ? tk.ngaySinh.Value.ToString("dd/MM/yyyy") : "");
             lblChucVu.Text ="Vai tro: " + tk.vaiTro;
+            if (tk.vaiTro == "admin")
+            {
+                lbl_role.Text = "Vai trò: Quản trị viên";
+            }
+            else if (tk.vaiTro == "nhanvien")
+            {
+                lbl_role.Text = "Vai trò: Nhân viên";
+            }
+            else
+            {
+                lbl_role.Text = "Vai trò: Độc giả";
+            }
         }
         private void frm_Main_Load(object sender, EventArgs e)
         {
@@ -212,7 +224,29 @@ namespace GUI
 
         private void btnTraSach_Click(object sender, EventArgs e)
         {
+            if (dgvPhieuMuon.CurrentRow == null)
+            {
+                MessageBox.Show("Vui lòng chọn một phiếu mượn.");
+                return;
+            }
+            string trangThai = dgvPhieuMuon.CurrentRow.Cells["trangThai"].Value.ToString();
 
+            if (trangThai == "Đã trả" || trangThai == "Quá hạn")
+            {
+                MessageBox.Show("Phiếu này đã hoàn tất. Không thể trả thêm sách.");
+                return;
+            }
+
+            // Lấy maPhieu từ dòng hiện tại
+            int soPhieu = Convert.ToInt32(dgvPhieuMuon.CurrentRow.Cells["soPhieu"].Value);
+
+            using (frmTraSach f = new frmTraSach(soPhieu)) // truyền maPhieu vào form Trả sách
+            {
+                if (f.ShowDialog() == DialogResult.OK)
+                {
+                    PanelBookManager_Load(); // reload lại
+                }
+            }
         }
 
         private void btnMuonSach_Click(object sender, EventArgs e)

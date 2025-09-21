@@ -41,5 +41,28 @@ namespace BusinessLogicLayer
         {
             return _dal.GetMaNhanVien(maNguoi);
         }
+        public string GetHoTenDocGia(int soPhieu)
+        {
+            return _dal.GetHoTenDocGia(soPhieu);
+        }
+
+        public DataTable GetThongTinPhieu(int soPhieu)
+        {
+            return _dal.GetThongTinPhieu(soPhieu);
+        }
+
+        public DataTable TimKiemSachTheoTinhTrang(string tinhTrang, string keyword)
+        {
+            if (string.IsNullOrWhiteSpace(tinhTrang))
+                tinhTrang = "Có sẵn"; // mặc định
+
+            return _dal.GetSachTheoTinhTrang(tinhTrang, keyword);
+        }
+
+        public DataTable TimKiemDocGia(string keyword)
+        {
+            // Nếu từ khóa null thì coi như rỗng
+            return _dal.TimKiemDocGia(keyword?.Trim() ?? string.Empty);
+        }
     }
 }

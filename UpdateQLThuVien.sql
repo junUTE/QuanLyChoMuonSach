@@ -756,7 +756,25 @@ BEGIN
 END;
 GO
 
-
+CREATE OR ALTER FUNCTION fn_GetThongTinPhieu (@soPhieu INT)
+RETURNS TABLE
+AS
+RETURN
+(
+    SELECT 
+        pm.soPhieu,
+        pm.maDocGia,
+        n.hoTen,
+        pm.maNhanVien,
+        pm.ngayMuon,
+        pm.ngayHenTra,
+        pm.trangThai
+    FROM PhieuMuon pm
+    JOIN DocGia dg ON pm.maDocGia = dg.maDocGia
+    JOIN Nguoi n ON dg.maNguoi = n.maNguoi
+    WHERE pm.soPhieu = @soPhieu
+);
+GO
 
 --=============== Views ================
 CREATE OR ALTER VIEW v_PhieuMuon

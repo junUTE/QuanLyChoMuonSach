@@ -59,6 +59,39 @@ namespace DataAccessLayer
             return dt.Rows[0]["maNhanVien"].ToString();
         }
 
+        public string GetHoTenDocGia(int soPhieu)
+        {
+            const string sql = "SELECT dbo.fn_GetHoTenDocGia(@param0) AS HoTen";
+            var dt = LoadData.ExecuteQuery(sql, new object[] { soPhieu });
 
+            if (dt.Rows.Count == 0 || dt.Rows[0]["HoTen"] == DBNull.Value)
+                return null;
+
+            return dt.Rows[0]["HoTen"].ToString();
+        }
+
+        public DataTable GetThongTinPhieu(int soPhieu)
+        {
+            const string sql = "SELECT * FROM dbo.fn_GetThongTinPhieu(@param0)";
+            return LoadData.ExecuteQuery(sql, new object[] { soPhieu });
+        }
+        public DataTable GetSachTheoTinhTrang(string tinhTrang, string keyword)
+        {
+            // Phải viết đúng tham số dạng @param0, @param1
+            string sql = "SELECT * FROM dbo.fn_SachTheoTinhTrang_TimKiem(@param0, @param1)";
+
+            object[] prms = { tinhTrang, keyword ?? string.Empty };
+
+            return LoadData.ExecuteQuery(sql, prms);
+        }
+
+        public DataTable TimKiemDocGia(string keyword)
+        {
+            string sql = "SELECT * FROM dbo.fn_TimKiemDocGia(@param0)";
+
+            object[] prms = { keyword ?? string.Empty };
+
+            return LoadData.ExecuteQuery(sql, prms);
+        }
     }
 }

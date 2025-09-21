@@ -41,5 +41,19 @@ namespace BusinessLogicLayer
         {
             return _dal.GetDocGiaThongTin();
         }
+        public DataTable GetCTPhieuMuon(int soPhieu)
+        {
+            return _dal.GetCTPhieuMuon(soPhieu);
+        }
+
+        public DataTable GetAllOrderByNgayMuonDesc()
+        {
+            return _dal.GetAllOrderByNgayMuonDesc();
+        }
+
+        public DataTable GetAllOrderByNgayMuonAsc()
+        {
+            return _dal.GetAllOrderByNgayMuonAsc();
+        }
     }
 }

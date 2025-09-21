@@ -300,7 +300,7 @@ namespace GUI
             // btnSearchPhieu
             // 
             this.btnSearchPhieu.Image = ((System.Drawing.Image)(resources.GetObject("btnSearchPhieu.Image")));
-            this.btnSearchPhieu.Location = new System.Drawing.Point(233, 166);
+            this.btnSearchPhieu.Location = new System.Drawing.Point(233, 161);
             this.btnSearchPhieu.Name = "btnSearchPhieu";
             this.btnSearchPhieu.Size = new System.Drawing.Size(42, 39);
             this.btnSearchPhieu.TabIndex = 7;

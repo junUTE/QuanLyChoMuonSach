@@ -16,6 +16,7 @@ namespace GUI
     public partial class frmMuonSach : Form
     {
         private ViewBLL viewBll = new ViewBLL();
+        private FunctionBLL Funcbll = new FunctionBLL();
         public frmMuonSach()
         {
             InitializeComponent();
@@ -289,6 +290,19 @@ namespace GUI
                 // Dù thành công hay lỗi thì vẫn load lại danh sách sách có sẵn
                 LoadSach();
             }  
-        } 
+        }
+
+        private void btnSearchSach_Click(object sender, EventArgs e)
+        {
+            string tinhTrang = "Có sẵn"; // hoặc lấy từ ComboBox
+            string keyword = txtSearchSach.Text.Trim();
+            dgvSach.DataSource = Funcbll.TimKiemSachTheoTinhTrang(tinhTrang, keyword);
+        }
+
+        private void btnSearchDG_Click(object sender, EventArgs e)
+        {
+            string keyword = txtSearchDG.Text.Trim();
+            dgvDocGia.DataSource = Funcbll.TimKiemDocGia(keyword);
+        }
     }
 }

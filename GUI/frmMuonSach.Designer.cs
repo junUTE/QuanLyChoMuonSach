@@ -49,13 +49,13 @@
             this.gbSachMuon = new System.Windows.Forms.GroupBox();
             this.dgvSachMuon = new System.Windows.Forms.DataGridView();
             this.toolSachMuon = new System.Windows.Forms.ToolStrip();
+            this.Xoa = new System.Windows.Forms.ToolStripButton();
             this.btnLuu = new System.Windows.Forms.ToolStripButton();
             this.rightPanel = new System.Windows.Forms.Panel();
             this.txtSearchSach = new System.Windows.Forms.TextBox();
             this.btnSearchSach = new System.Windows.Forms.Button();
             this.dgvSach = new System.Windows.Forms.DataGridView();
             this.lblSachList = new System.Windows.Forms.Label();
-            this.Xoa = new System.Windows.Forms.ToolStripButton();
             this.mainLayout.SuspendLayout();
             this.leftPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDocGia)).BeginInit();
@@ -109,11 +109,12 @@
             // btnSearchDG
             // 
             this.btnSearchDG.Image = ((System.Drawing.Image)(resources.GetObject("btnSearchDG.Image")));
-            this.btnSearchDG.Location = new System.Drawing.Point(25, 65);
+            this.btnSearchDG.Location = new System.Drawing.Point(25, 63);
             this.btnSearchDG.Name = "btnSearchDG";
             this.btnSearchDG.Size = new System.Drawing.Size(42, 39);
             this.btnSearchDG.TabIndex = 8;
             this.btnSearchDG.UseVisualStyleBackColor = true;
+            this.btnSearchDG.Click += new System.EventHandler(this.btnSearchDG_Click);
             // 
             // dgvDocGia
             // 
@@ -286,6 +287,16 @@
             this.toolSachMuon.Size = new System.Drawing.Size(726, 37);
             this.toolSachMuon.TabIndex = 1;
             // 
+            // Xoa
+            // 
+            this.Xoa.Font = new System.Drawing.Font("Segoe UI", 10F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Xoa.ForeColor = System.Drawing.SystemColors.MenuHighlight;
+            this.Xoa.Image = ((System.Drawing.Image)(resources.GetObject("Xoa.Image")));
+            this.Xoa.Name = "Xoa";
+            this.Xoa.Size = new System.Drawing.Size(77, 32);
+            this.Xoa.Text = "Xóa";
+            this.Xoa.Click += new System.EventHandler(this.Xoa_Click);
+            // 
             // btnLuu
             // 
             this.btnLuu.Font = new System.Drawing.Font("Segoe UI", 10F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -321,11 +332,12 @@
             // btnSearchSach
             // 
             this.btnSearchSach.Image = ((System.Drawing.Image)(resources.GetObject("btnSearchSach.Image")));
-            this.btnSearchSach.Location = new System.Drawing.Point(35, 65);
+            this.btnSearchSach.Location = new System.Drawing.Point(35, 62);
             this.btnSearchSach.Name = "btnSearchSach";
             this.btnSearchSach.Size = new System.Drawing.Size(42, 39);
             this.btnSearchSach.TabIndex = 9;
             this.btnSearchSach.UseVisualStyleBackColor = true;
+            this.btnSearchSach.Click += new System.EventHandler(this.btnSearchSach_Click);
             // 
             // dgvSach
             // 
@@ -347,16 +359,6 @@
             this.lblSachList.Size = new System.Drawing.Size(449, 158);
             this.lblSachList.TabIndex = 1;
             this.lblSachList.Text = "Danh sách sách";
-            // 
-            // Xoa
-            // 
-            this.Xoa.Font = new System.Drawing.Font("Segoe UI", 10F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Xoa.ForeColor = System.Drawing.SystemColors.MenuHighlight;
-            this.Xoa.Image = ((System.Drawing.Image)(resources.GetObject("Xoa.Image")));
-            this.Xoa.Name = "Xoa";
-            this.Xoa.Size = new System.Drawing.Size(77, 32);
-            this.Xoa.Text = "Xóa";
-            this.Xoa.Click += new System.EventHandler(this.Xoa_Click);
             // 
             // frmMuonSach
             // 
