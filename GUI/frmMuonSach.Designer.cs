@@ -270,10 +270,10 @@
             // 
             this.dgvSachMuon.ColumnHeadersHeight = 34;
             this.dgvSachMuon.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvSachMuon.Location = new System.Drawing.Point(3, 72);
+            this.dgvSachMuon.Location = new System.Drawing.Point(3, 73);
             this.dgvSachMuon.Name = "dgvSachMuon";
             this.dgvSachMuon.RowHeadersWidth = 62;
-            this.dgvSachMuon.Size = new System.Drawing.Size(726, 480);
+            this.dgvSachMuon.Size = new System.Drawing.Size(726, 479);
             this.dgvSachMuon.TabIndex = 0;
             // 
             // toolSachMuon
@@ -284,7 +284,7 @@
             this.btnLuu});
             this.toolSachMuon.Location = new System.Drawing.Point(3, 35);
             this.toolSachMuon.Name = "toolSachMuon";
-            this.toolSachMuon.Size = new System.Drawing.Size(726, 37);
+            this.toolSachMuon.Size = new System.Drawing.Size(726, 38);
             this.toolSachMuon.TabIndex = 1;
             // 
             // Xoa
@@ -293,7 +293,7 @@
             this.Xoa.ForeColor = System.Drawing.SystemColors.MenuHighlight;
             this.Xoa.Image = ((System.Drawing.Image)(resources.GetObject("Xoa.Image")));
             this.Xoa.Name = "Xoa";
-            this.Xoa.Size = new System.Drawing.Size(77, 32);
+            this.Xoa.Size = new System.Drawing.Size(77, 33);
             this.Xoa.Text = "Xóa";
             this.Xoa.Click += new System.EventHandler(this.Xoa_Click);
             // 
@@ -303,7 +303,7 @@
             this.btnLuu.ForeColor = System.Drawing.SystemColors.MenuHighlight;
             this.btnLuu.Image = ((System.Drawing.Image)(resources.GetObject("btnLuu.Image")));
             this.btnLuu.Name = "btnLuu";
-            this.btnLuu.Size = new System.Drawing.Size(75, 32);
+            this.btnLuu.Size = new System.Drawing.Size(75, 33);
             this.btnLuu.Text = "Lưu";
             this.btnLuu.Click += new System.EventHandler(this.btnLuu_Click);
             // 
@@ -328,6 +328,7 @@
             this.txtSearchSach.Name = "txtSearchSach";
             this.txtSearchSach.Size = new System.Drawing.Size(270, 37);
             this.txtSearchSach.TabIndex = 10;
+            this.txtSearchSach.TextChanged += new System.EventHandler(this.txtSearchSach_TextChanged);
             // 
             // btnSearchSach
             // 

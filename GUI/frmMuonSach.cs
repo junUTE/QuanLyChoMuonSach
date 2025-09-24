@@ -304,5 +304,10 @@ namespace GUI
             string keyword = txtSearchDG.Text.Trim();
             dgvDocGia.DataSource = Funcbll.TimKiemDocGia(keyword);
         }
+
+        private void txtSearchSach_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

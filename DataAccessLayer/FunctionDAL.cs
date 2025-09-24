@@ -8,30 +8,7 @@ namespace DataAccessLayer
 {
     public class FunctionDAL
     {
-        // fn_TongNgayTre: trả về INT
-        public int TongNgayTre(string maDocGia)
-        {
-            string sql = "SELECT dbo.fn_TongNgayTre(@param0)";
-            DataTable dt = LoadData.ExecuteQuery(sql, new object[] { maDocGia });
-            return dt.Rows.Count > 0 ? Convert.ToInt32(dt.Rows[0][0]) : 0;
-        }
 
-        // fn_TongSachTheoTinhTrang: trả về INT
-        public int TongSachTheoTinhTrang(string tinhTrang)
-        {
-            string sql = "SELECT dbo.fn_TongSachTheoTinhTrang(@param0)";
-            DataTable dt = LoadData.ExecuteQuery(sql, new object[] { tinhTrang });
-            return dt.Rows.Count > 0 ? Convert.ToInt32(dt.Rows[0][0]) : 0;
-        }
-
-        // fn_SachDangMuon: trả về bảng
-        public DataTable SachDangMuon(string maDocGia)
-        {
-            string sql = "SELECT * FROM dbo.fn_SachDangMuon(@param0)";
-            return LoadData.ExecuteQuery(sql, new object[] { maDocGia });
-        }
-
-        // fn_SachTheoTinhTrang: trả về bảng
         public  DataTable SachTheoTinhTrang(string tinhTrang)
         {
             string sql = "SELECT * FROM dbo.fn_SachTheoTinhTrang(@param0)";
@@ -93,5 +70,128 @@ namespace DataAccessLayer
 
             return LoadData.ExecuteQuery(sql, prms);
         }
+
+        // Lấy danh sách tác giả từ function SQL
+        public DataTable LayDanhSachTacGia()
+        {
+            string sql = "SELECT tacGia FROM fn_LayDanhSachTacGia() ORDER BY tacGia";
+            return LoadData.ExecuteQuery(sql);
+        }
+
+        // Lấy danh sách thể loại từ function SQL
+        public DataTable LayDanhSachTheLoai()
+        {
+            string sql = "SELECT theLoai FROM fn_LayDanhSachTheLoai() ORDER BY theLoai";
+            return LoadData.ExecuteQuery(sql);
+        }
+
+        public DataTable TimKiemCuonSach_ChiTiet(string keyword)
+        {
+
+            object[] prms = { keyword ?? string.Empty };
+
+            string sql = "SELECT * FROM fn_TimKiemCuonSach_ChiTiet(@param0)";
+
+            return LoadData.ExecuteQuery(sql, prms);
+        }
+
+        public DataTable TimKiemTaiKhoan(string keyword)
+        {
+            string sql = "SELECT * FROM dbo.fn_TimKiemTaiKhoan(@param0)";
+            return LoadData.ExecuteQuery(sql, new object[] { keyword ?? string.Empty });
+        }
+
+        // ================= Phiếu mượn =================
+        public int SoPhieuDangMuon(DateTime tuNgay, DateTime denNgay)
+        {
+            string sql = "SELECT dbo.fn_ThongKe_Phieu_DangMuon(@param0, @param1) AS SoPhieu";
+            var dt = LoadData.ExecuteQuery(sql, new object[] { tuNgay, denNgay });
+            return dt.Rows.Count > 0 ? Convert.ToInt32(dt.Rows[0]["SoPhieu"]) : 0;
+        }
+
+        public int SoPhieuDaTra(DateTime tuNgay, DateTime denNgay)
+        {
+            string sql = "SELECT dbo.fn_ThongKe_Phieu_DaTra(@param0, @param1) AS SoPhieu";
+            var dt = LoadData.ExecuteQuery(sql, new object[] { tuNgay, denNgay });
+            return dt.Rows.Count > 0 ? Convert.ToInt32(dt.Rows[0]["SoPhieu"]) : 0;
+        }
+
+        public int SoPhieuTreHan(DateTime tuNgay, DateTime denNgay)
+        {
+            string sql = "SELECT dbo.fn_ThongKe_Phieu_TreHan(@param0, @param1) AS SoPhieu";
+            var dt = LoadData.ExecuteQuery(sql, new object[] { tuNgay, denNgay });
+            return dt.Rows.Count > 0 ? Convert.ToInt32(dt.Rows[0]["SoPhieu"]) : 0;
+        }
+
+        public int TongPhieu(DateTime tuNgay, DateTime denNgay)
+        {
+            string sql = "SELECT dbo.fn_ThongKe_Phieu_Tong(@param0, @param1) AS SoPhieu";
+            var dt = LoadData.ExecuteQuery(sql, new object[] { tuNgay, denNgay });
+            return dt.Rows.Count > 0 ? Convert.ToInt32(dt.Rows[0]["SoPhieu"]) : 0;
+        }
+
+        // ================= Sách =================
+        public int SoSachDangMuon(DateTime tuNgay, DateTime denNgay)
+        {
+            string sql = "SELECT dbo.fn_ThongKe_Sach_DangMuon(@param0, @param1) AS SoSach";
+            var dt = LoadData.ExecuteQuery(sql, new object[] { tuNgay, denNgay });
+            return dt.Rows.Count > 0 ? Convert.ToInt32(dt.Rows[0]["SoSach"]) : 0;
+        }
+
+        public int SoSachHong(DateTime tuNgay, DateTime denNgay)
+        {
+            string sql = "SELECT dbo.fn_ThongKe_Sach_Hong(@param0, @param1) AS SoSach";
+            var dt = LoadData.ExecuteQuery(sql, new object[] { tuNgay, denNgay });
+            return dt.Rows.Count > 0 ? Convert.ToInt32(dt.Rows[0]["SoSach"]) : 0;
+        }
+
+        public int SoSachMat(DateTime tuNgay, DateTime denNgay)
+        {
+            string sql = "SELECT dbo.fn_ThongKe_Sach_Mat(@param0, @param1) AS SoSach";
+            var dt = LoadData.ExecuteQuery(sql, new object[] { tuNgay, denNgay });
+            return dt.Rows.Count > 0 ? Convert.ToInt32(dt.Rows[0]["SoSach"]) : 0;
+        }
+
+        public int TongSach()
+        {
+            string sql = "SELECT dbo.fn_ThongKe_Sach_Tong() AS SoSach";
+            var dt = LoadData.ExecuteQuery(sql);
+            return dt.Rows.Count > 0 ? Convert.ToInt32(dt.Rows[0]["SoSach"]) : 0;
+        }
+
+        // ================= Độc giả =================
+        public int SoDocGiaDangMuon(DateTime tuNgay, DateTime denNgay)
+        {
+            string sql = "SELECT dbo.fn_ThongKe_DocGia_DangMuon(@param0, @param1) AS SoDocGia";
+            var dt = LoadData.ExecuteQuery(sql, new object[] { tuNgay, denNgay });
+            return dt.Rows.Count > 0 ? Convert.ToInt32(dt.Rows[0]["SoDocGia"]) : 0;
+        }
+
+        public int SoDocGiaViPham(DateTime tuNgay, DateTime denNgay)
+        {
+            string sql = "SELECT dbo.fn_ThongKe_DocGia_ViPham(@param0, @param1) AS SoDocGia";
+            var dt = LoadData.ExecuteQuery(sql, new object[] { tuNgay, denNgay });
+            return dt.Rows.Count > 0 ? Convert.ToInt32(dt.Rows[0]["SoDocGia"]) : 0;
+        }
+
+        public int TongDocGia()
+        {
+            string sql = "SELECT dbo.fn_ThongKe_DocGia_Tong() AS SoDocGia";
+            var dt = LoadData.ExecuteQuery(sql);
+            return dt.Rows.Count > 0 ? Convert.ToInt32(dt.Rows[0]["SoDocGia"]) : 0;
+        }
+
+        public DataTable DanhSachPhieuQuaHan()
+        {
+            string sql = "EXEC sp_DanhSachPhieuQuaHan";
+            return LoadData.ExecuteQuery(sql);
+        }
+        public DataTable DanhSachPhieuQuaHanTheoKhoangNgay(DateTime tuNgay, DateTime denNgay)
+        {
+            string sql = "SELECT * FROM dbo.fn_DanhSachPhieuQuaHanTheoKhoangNgay(@param0, @param1)";
+            object[] prms = { tuNgay, denNgay };
+            return LoadData.ExecuteQuery(sql, prms);
+        }
+
     }
 }

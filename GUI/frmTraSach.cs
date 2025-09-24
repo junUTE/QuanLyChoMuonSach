@@ -162,8 +162,13 @@ namespace GUI
             int soPhieu = _soPhieu;
             int maCuonSach = Convert.ToInt32(dgvCTPhieuMuon.CurrentRow.Cells["maCuonSach"].Value);
 
+            // Lấy trạng thái mới từ combo box
+            string tinhTrangMoi = string.IsNullOrWhiteSpace(cbbTinhTrangMoi.Text)
+                                  ? null
+                                  : cbbTinhTrangMoi.Text;
+
             string err;
-            bool ok = spBll.TraTungSach(soPhieu, maCuonSach, out err);
+            bool ok = spBll.TraTungSach(soPhieu, maCuonSach, tinhTrangMoi, out err);
 
             if (ok)
             {
@@ -174,6 +179,12 @@ namespace GUI
             {
                 MessageBox.Show("Không thể trả sách. " + err, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.OK;
+            this.Close();
         }
     }
 }

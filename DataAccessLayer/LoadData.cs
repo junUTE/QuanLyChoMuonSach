@@ -7,7 +7,17 @@ namespace DataAccessLayer
     public static class LoadData
     {
         private static string connectionString =
-            "Data Source=.;Initial Catalog=QLThuVien;Integrated Security=True;TrustServerCertificate=True";
+        "Data Source=.;Initial Catalog=QLThuVien;Integrated Security=True;TrustServerCertificate=True";
+
+        public static void SetConnectionString(string connStr)
+        {
+            connectionString = connStr;
+        }
+
+        public static string GetConnectionString()
+        {
+            return connectionString;
+        }
 
         public static DataTable ExecuteQuery(string sql, object[] parameters = null)
         {

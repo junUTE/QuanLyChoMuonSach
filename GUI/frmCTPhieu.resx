@@ -117,29 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="btnClose.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6
-        JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAB3RJTUUH6QMVAxA1w89VvAAAA+1JREFU
-        WEftVc9vG0UUnjlUtWOuSFApByRK1HLqDeK13+y6Fioq4oeSqnVszxurpOJGS1Pa/Adw4sq1B9TSViBu
-        8A9wQxyQEFIh3nmzcWgSDhyoRJq6erubxLuxk1V7zSc9yZL3zffNvB+fEEc4wgQ4DwV5KCPoyn/evSQ3
-        z7Xyn0xE3+9wyDTyfx+OwQfzgmaNoLouOdDTg7OdyqBR7CDro/jjrfdEqLonrOq+HNWvSKtM/rPJcGda
-        wjW0cH77mFN6jgB/IcCl0OtM2Vo3/3kGTL5a04KUfp0U3iWF31kwp/5TRhQW4Wa1dB4ed3X8yAH2HeCQ
-        wGzYOl4La92Kret8Sgwm//08ypT8G6fwKSmzTcp8T8qctspIKiKCQEsCPEOADx2YoVNJsAgC/JRAlwkw
-        k8PkYRCTn9whH8nbJjC3KehVVuc+kZnEcbC+lqTwFAHeJ8DtnYPSeESA10KvVRp+PRzJ2SW/41Q2h8Bs
-        EuBNOtubit6/crgA5xsRBUaSj2/wgQQ4etiQALkcN1hEv3oxvn1Kftcp3MqQK7NJCq9T0JkKvcti7cK5
-        PN14sIi/m4v8EnsiMuXAdVvHz8Nq6zgp5Jp/S6PksdCUXOkKqWzJCoFF/Fa9wCWZsUk5njqVvEb6EmsE
-        5kuCuNu3cgI3CcySbfQq1i/QeJMQ+ijWoCdIGX6J+3kiB+Z/B3zzkTIp5JvfJL9TJv/gsS0Efgl+QlI4
-        QwofsAgaIRypN5NvkMJlChJy1yy+PQ8FC3HcE4A/7Z8O3hX4mABvuaBTds2FfPqLw/rphgP80U0WwI1Z
-        Wnl7Pp/+/EjGLA4etbTbx5QgacxkOrxWKay1xQsLYXIHu7s9IU+bMCE0WwTmCf/eExKLuGFrCyVbK2Zg
-        Y8Hka9Vd8jvEGy5LxFvxKwLzgACf5EZ03Sm8uhp0y5E/3jsOBJM/fCdrLJnnTkZtmYJ2KR3ReDpyJeGN
-        edUeYGBjsc9Y4gU0Sh5vuFs8aq7R3hlTHtFkT4zuhNRF+9WFchQsip9fnc7T7QfVtKS65gN5t+eMBTcs
-        4BKTP14+sWsszmerxRmr8F5+RDmHAK+7Zq9czIwApUvs+E9eLpmbA35mQU/l7Zg35kqjKy2/BMT9spuX
-        XAJvu4apREXseBD0ZOT3uLZzpEyYbLjUWPzJxsKlWD//8Z6LxiJi8h+cwjed0tKpAr3wb3NRhIBi4PeO
-        kTLzpPDXZLd3K3RIR7OIFa/NPcEi7hGTA5526gtRiHwHG43LYsVHYQNTDpV+Lay1XwoLzjSLeOR9KCKl
-        pyOlX/nL6xW7eR79huGQfV/L/uxF2a9eyn8yEat+l0Omkf/7CEfI4Bmlvjwq18bREgAAAABJRU5ErkJg
-        gg==
-</value>
-  </data>
 </root>

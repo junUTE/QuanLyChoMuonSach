@@ -10,6 +10,7 @@
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmTraSach));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanelRight = new System.Windows.Forms.TableLayoutPanel();
             this.gbThongTinPhieu = new System.Windows.Forms.GroupBox();
@@ -25,6 +26,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.gbThongTinSach = new System.Windows.Forms.GroupBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.cbbTinhTrangMoi = new DevExpress.XtraEditors.ComboBoxEdit();
             this.txtGhiChu = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.txtMaSach = new System.Windows.Forms.TextBox();
@@ -47,10 +50,12 @@
             this.txtNgayHenTra = new System.Windows.Forms.TextBox();
             this.txtNgayTra = new System.Windows.Forms.TextBox();
             this.txtTrangThai = new System.Windows.Forms.TextBox();
+            this.btnClose = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanelRight.SuspendLayout();
             this.gbThongTinPhieu.SuspendLayout();
             this.gbThongTinSach.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cbbTinhTrangMoi.Properties)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCTPhieuMuon)).BeginInit();
             this.SuspendLayout();
@@ -86,6 +91,7 @@
             // 
             // gbThongTinPhieu
             // 
+            this.gbThongTinPhieu.Controls.Add(this.btnClose);
             this.gbThongTinPhieu.Controls.Add(this.btnTraSach);
             this.gbThongTinPhieu.Controls.Add(this.dateTra);
             this.gbThongTinPhieu.Controls.Add(this.dateMuon);
@@ -201,6 +207,8 @@
             // 
             // gbThongTinSach
             // 
+            this.gbThongTinSach.Controls.Add(this.label7);
+            this.gbThongTinSach.Controls.Add(this.cbbTinhTrangMoi);
             this.gbThongTinSach.Controls.Add(this.txtGhiChu);
             this.gbThongTinSach.Controls.Add(this.label6);
             this.gbThongTinSach.Controls.Add(this.txtMaSach);
@@ -219,49 +227,71 @@
             this.gbThongTinSach.TabStop = false;
             this.gbThongTinSach.Text = "Thông tin sách chi tiết";
             // 
+            // label7
+            // 
+            this.label7.Location = new System.Drawing.Point(75, 194);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(165, 30);
+            this.label7.TabIndex = 9;
+            this.label7.Text = "Tình trạng mới:";
+            // 
+            // cbbTinhTrangMoi
+            // 
+            this.cbbTinhTrangMoi.Location = new System.Drawing.Point(244, 191);
+            this.cbbTinhTrangMoi.Name = "cbbTinhTrangMoi";
+            this.cbbTinhTrangMoi.Properties.Appearance.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.cbbTinhTrangMoi.Properties.Appearance.Options.UseFont = true;
+            this.cbbTinhTrangMoi.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.cbbTinhTrangMoi.Properties.Items.AddRange(new object[] {
+            "Hỏng",
+            "Mất"});
+            this.cbbTinhTrangMoi.Size = new System.Drawing.Size(150, 36);
+            this.cbbTinhTrangMoi.TabIndex = 8;
+            // 
             // txtGhiChu
             // 
-            this.txtGhiChu.Location = new System.Drawing.Point(167, 198);
+            this.txtGhiChu.Location = new System.Drawing.Point(243, 143);
             this.txtGhiChu.Name = "txtGhiChu";
             this.txtGhiChu.ReadOnly = true;
-            this.txtGhiChu.Size = new System.Drawing.Size(295, 37);
+            this.txtGhiChu.Size = new System.Drawing.Size(151, 37);
             this.txtGhiChu.TabIndex = 7;
             // 
             // label6
             // 
-            this.label6.Location = new System.Drawing.Point(59, 198);
+            this.label6.Location = new System.Drawing.Point(87, 146);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(104, 30);
+            this.label6.Size = new System.Drawing.Size(160, 30);
             this.label6.TabIndex = 6;
-            this.label6.Text = "Trạng Thái:";
+            this.label6.Text = "Tình trạng cũ:";
             // 
             // txtMaSach
             // 
-            this.txtMaSach.Location = new System.Drawing.Point(167, 49);
+            this.txtMaSach.Location = new System.Drawing.Point(116, 49);
             this.txtMaSach.Name = "txtMaSach";
             this.txtMaSach.ReadOnly = true;
-            this.txtMaSach.Size = new System.Drawing.Size(295, 37);
+            this.txtMaSach.Size = new System.Drawing.Size(70, 37);
             this.txtMaSach.TabIndex = 5;
             // 
             // txtTacGia
             // 
-            this.txtTacGia.Location = new System.Drawing.Point(167, 148);
+            this.txtTacGia.Location = new System.Drawing.Point(126, 94);
             this.txtTacGia.Name = "txtTacGia";
             this.txtTacGia.ReadOnly = true;
-            this.txtTacGia.Size = new System.Drawing.Size(295, 37);
+            this.txtTacGia.Size = new System.Drawing.Size(262, 37);
             this.txtTacGia.TabIndex = 4;
             // 
             // txtTenSach
             // 
-            this.txtTenSach.Location = new System.Drawing.Point(167, 101);
+            this.txtTenSach.Location = new System.Drawing.Point(323, 49);
             this.txtTenSach.Name = "txtTenSach";
             this.txtTenSach.ReadOnly = true;
-            this.txtTenSach.Size = new System.Drawing.Size(295, 37);
+            this.txtTenSach.Size = new System.Drawing.Size(207, 37);
             this.txtTenSach.TabIndex = 3;
             // 
             // lblTacGia
             // 
-            this.lblTacGia.Location = new System.Drawing.Point(65, 148);
+            this.lblTacGia.Location = new System.Drawing.Point(14, 94);
             this.lblTacGia.Name = "lblTacGia";
             this.lblTacGia.Size = new System.Drawing.Size(96, 30);
             this.lblTacGia.TabIndex = 0;
@@ -269,7 +299,7 @@
             // 
             // lblTenSach
             // 
-            this.lblTenSach.Location = new System.Drawing.Point(52, 101);
+            this.lblTenSach.Location = new System.Drawing.Point(214, 49);
             this.lblTenSach.Name = "lblTenSach";
             this.lblTenSach.Size = new System.Drawing.Size(109, 30);
             this.lblTenSach.TabIndex = 1;
@@ -277,7 +307,7 @@
             // 
             // lblMaSach
             // 
-            this.lblMaSach.Location = new System.Drawing.Point(55, 49);
+            this.lblMaSach.Location = new System.Drawing.Point(14, 49);
             this.lblMaSach.Name = "lblMaSach";
             this.lblMaSach.Size = new System.Drawing.Size(106, 33);
             this.lblMaSach.TabIndex = 2;
@@ -390,10 +420,25 @@
             this.txtTrangThai.Size = new System.Drawing.Size(100, 26);
             this.txtTrangThai.TabIndex = 0;
             // 
+            // btnClose
+            // 
+            this.btnClose.Font = new System.Drawing.Font("Segoe UI", 10F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnClose.ForeColor = System.Drawing.Color.Red;
+            this.btnClose.Image = ((System.Drawing.Image)(resources.GetObject("btnClose.Image")));
+            this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnClose.Location = new System.Drawing.Point(395, 169);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(121, 43);
+            this.btnClose.TabIndex = 27;
+            this.btnClose.Text = "    Đóng";
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            // 
             // frmTraSach
             // 
             this.ClientSize = new System.Drawing.Size(1167, 560);
+            this.ControlBox = false;
             this.Controls.Add(this.tableLayoutPanel1);
+            this.MaximizeBox = false;
             this.Name = "frmTraSach";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Trả sách";
@@ -404,6 +449,7 @@
             this.gbThongTinPhieu.PerformLayout();
             this.gbThongTinSach.ResumeLayout(false);
             this.gbThongTinSach.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cbbTinhTrangMoi.Properties)).EndInit();
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvCTPhieuMuon)).EndInit();
             this.ResumeLayout(false);
@@ -434,5 +480,8 @@
         private System.Windows.Forms.TextBox txtGhiChu;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button btnTraSach;
+        private DevExpress.XtraEditors.ComboBoxEdit cbbTinhTrangMoi;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button btnClose;
     }
 }
