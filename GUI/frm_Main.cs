@@ -724,10 +724,9 @@ namespace GUI
 
             if (bll.DoiMatKhau(userName, oldPassword, newPassword, out errorMessage))
             {
-                MessageBox.Show("Đổi mật khẩu thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                txtOldPassWord.Clear();
-                txtNewPassWord.Clear();
-                grDoiMatKhau.Enabled = false;
+                MessageBox.Show("Đổi mật khẩu thành công! Vui lòng đăng nhập lại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoadData.SetConnectionString("Data Source=.;Initial Catalog=QLThuVien;Integrated Security=True;TrustServerCertificate=True");
+                this.Close();
             }
             else
             {
