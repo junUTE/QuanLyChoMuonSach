@@ -279,5 +279,34 @@ namespace DataAccessLayer
                 return null;
             }
         }
+        public bool ThemDocGia(string hoTen, string gioiTinh, DateTime ngaySinh, string diaChi, string sdt, string email, string cccd, out string errorMessage)
+        {
+            errorMessage = string.Empty;
+            try
+            {
+                var prms = new[]
+                {
+                    new SqlParameter("@hoTen", hoTen),
+                    new SqlParameter("@gioiTinh", gioiTinh),
+                    new SqlParameter("@ngaySinh", ngaySinh),
+                    new SqlParameter("@diaChi", (object)diaChi ?? DBNull.Value),
+                    new SqlParameter("@SDT", (object)sdt ?? DBNull.Value),
+                    new SqlParameter("@Email", (object)email ?? DBNull.Value),
+                    new SqlParameter("@CCCD", cccd)
+                };
+
+                LoadData.ExecuteNonQuerySP("sp_ThemDocGia", prms);
+                return true;
+            }
+            catch (SqlException ex)
+            {
+                errorMessage = ex.Message;
+                return false;
+            }
+        }
+        public DataTable XemDSThanhVien()
+        {
+            return LoadData.ExecuteQuery("EXEC sp_XemDanhSachThanhVien");
+        }
     }
 }

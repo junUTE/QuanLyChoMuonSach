@@ -205,5 +205,13 @@ namespace BusinessLogicLayer
                 return null;
             }
         }
+        public bool ThemDocGia(string hoTen, string gioiTinh, DateTime ngaySinh, string diaChi, string sdt, string email, string cccd, out string errorMessage)
+        {
+            return _dal.ThemDocGia(hoTen, gioiTinh, ngaySinh, diaChi, sdt, email, cccd, out errorMessage);
+        }
+        public DataTable XemDSThanhVien()
+        {
+            return _dal.XemDSThanhVien();
+        }
     }
 }

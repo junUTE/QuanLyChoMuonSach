@@ -44,6 +44,8 @@ namespace GUI
             this.logoLib = new System.Windows.Forms.PictureBox();
             this.panelMain = new System.Windows.Forms.Panel();
             this.panelCreateAcc = new System.Windows.Forms.Panel();
+            this.btnDsMember = new System.Windows.Forms.Button();
+            this.btnThemNguoi = new System.Windows.Forms.Button();
             this.btnXoaTK = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.btnTaoTaiKhoan = new System.Windows.Forms.Button();
@@ -360,6 +362,8 @@ namespace GUI
             // panelCreateAcc
             // 
             this.panelCreateAcc.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
+            this.panelCreateAcc.Controls.Add(this.btnDsMember);
+            this.panelCreateAcc.Controls.Add(this.btnThemNguoi);
             this.panelCreateAcc.Controls.Add(this.btnXoaTK);
             this.panelCreateAcc.Controls.Add(this.groupBox4);
             this.panelCreateAcc.Controls.Add(this.txtKeyword);
@@ -372,6 +376,36 @@ namespace GUI
             this.panelCreateAcc.Size = new System.Drawing.Size(886, 704);
             this.panelCreateAcc.TabIndex = 15;
             this.panelCreateAcc.Visible = false;
+            // 
+            // btnDsMember
+            // 
+            this.btnDsMember.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(74)))), ((int)(((byte)(191)))));
+            this.btnDsMember.FlatAppearance.BorderSize = 0;
+            this.btnDsMember.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDsMember.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnDsMember.ForeColor = System.Drawing.Color.White;
+            this.btnDsMember.Location = new System.Drawing.Point(521, 30);
+            this.btnDsMember.Name = "btnDsMember";
+            this.btnDsMember.Size = new System.Drawing.Size(155, 40);
+            this.btnDsMember.TabIndex = 16;
+            this.btnDsMember.Text = "DS Thành viên";
+            this.btnDsMember.UseVisualStyleBackColor = false;
+            this.btnDsMember.Click += new System.EventHandler(this.btnDsMember_Click);
+            // 
+            // btnThemNguoi
+            // 
+            this.btnThemNguoi.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(74)))), ((int)(((byte)(191)))));
+            this.btnThemNguoi.FlatAppearance.BorderSize = 0;
+            this.btnThemNguoi.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnThemNguoi.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnThemNguoi.ForeColor = System.Drawing.Color.White;
+            this.btnThemNguoi.Location = new System.Drawing.Point(682, 30);
+            this.btnThemNguoi.Name = "btnThemNguoi";
+            this.btnThemNguoi.Size = new System.Drawing.Size(158, 40);
+            this.btnThemNguoi.TabIndex = 15;
+            this.btnThemNguoi.Text = "+ Thêm thành viên";
+            this.btnThemNguoi.UseVisualStyleBackColor = false;
+            this.btnThemNguoi.Click += new System.EventHandler(this.btnThemNguoi_Click);
             // 
             // btnXoaTK
             // 
@@ -1632,7 +1666,6 @@ namespace GUI
         private System.Windows.Forms.Label lblBookManager;
         private System.Windows.Forms.Panel panelSearch;
         private System.Windows.Forms.Label lblSearch;
-        private System.Windows.Forms.Panel panelCreateAcc;
         private System.Windows.Forms.Panel panelStatic;
         private System.Windows.Forms.Label lblStatic;
         private System.Windows.Forms.Panel panelAccount;
@@ -1649,28 +1682,10 @@ namespace GUI
         private DevExpress.XtraEditors.ComboBoxEdit cbbTacGia;
         private TextBox txtSearchSach;
         private Button btnSearchSach;
-        private Label lblCreateAcc;
         private Label lbTaiKhoan;
-        private TextBox lblDiaChi;
         private TextBox lblChucVu;
-        private TextBox lblGioiTinh;
-        private TextBox lblEmail;
-        private TextBox lblSDT;
-        private TextBox lblCCCD;
-        private TextBox lblNgaySinh;
-        private TextBox lblHoTen;
         private TextBox lblId;
-        private DataGridView dgvTaiKhoan;
-        private TextBox txtKeyword;
-        private Button btnTimKiemTaiKhoan;
-        private Label label7;
-        private Label label6;
-        private Label label5;
-        private Label label4;
-        private Label label3;
         private Label label2;
-        private Label label10;
-        private Label label9;
         private Label label8;
         private PictureBox pictureBox1;
         private Label label14;
@@ -1705,6 +1720,31 @@ namespace GUI
         private DateTimePicker dtDenNgay;
         private Label label12;
         private Button btnThongKe;
+        private Button btnCTPhieu;
+        private GroupBox grDoiMatKhau;
+        private Label label25;
+        private Label label31;
+        private TextBox txtOldPassWord;
+        private TextBox txtNewPassWord;
+        private Button btnDoiMatKhau;
+        private Button btnConfirm;
+        private Label label10;
+        private Label label9;
+        private Label label7;
+        private Label label6;
+        private Label label5;
+        private Label label4;
+        private Label label3;
+        private TextBox lblDiaChi;
+        private TextBox lblGioiTinh;
+        private TextBox lblEmail;
+        private TextBox lblSDT;
+        private TextBox lblCCCD;
+        private TextBox lblNgaySinh;
+        private TextBox lblHoTen;
+        private Panel panelCreateAcc;
+        private Button btnThemNguoi;
+        private Button btnXoaTK;
         private GroupBox groupBox4;
         private Button btnTaoTaiKhoan;
         private Label label26;
@@ -1715,14 +1755,10 @@ namespace GUI
         private TextBox txtPass;
         private TextBox txtUsername;
         private TextBox txtIdNguoi;
-        private Button btnCTPhieu;
-        private Button btnXoaTK;
-        private GroupBox grDoiMatKhau;
-        private Label label25;
-        private Label label31;
-        private TextBox txtOldPassWord;
-        private TextBox txtNewPassWord;
-        private Button btnDoiMatKhau;
-        private Button btnConfirm;
+        private TextBox txtKeyword;
+        private Button btnTimKiemTaiKhoan;
+        private DataGridView dgvTaiKhoan;
+        private Label lblCreateAcc;
+        private Button btnDsMember;
     }
 }

@@ -9,7 +9,7 @@ namespace DataAccessLayer
     public class FunctionDAL
     {
 
-        public  DataTable SachTheoTinhTrang(string tinhTrang)
+        public DataTable SachTheoTinhTrang(string tinhTrang)
         {
             string sql = "SELECT * FROM dbo.fn_SachTheoTinhTrang(@param0)";
             return LoadData.ExecuteQuery(sql, new object[] { tinhTrang });
@@ -192,6 +192,5 @@ namespace DataAccessLayer
             object[] prms = { tuNgay, denNgay };
             return LoadData.ExecuteQuery(sql, prms);
         }
-
     }
 }

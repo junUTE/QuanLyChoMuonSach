@@ -64,11 +64,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="frmAddMember.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAddMember.Designer.cs">
+      <DependentUpon>frmAddMember.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmCTPhieu.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmCTPhieu.Designer.cs">
       <DependentUpon>frmCTPhieu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmDSThanhVien.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmDSThanhVien.Designer.cs">
+      <DependentUpon>frmDSThanhVien.cs</DependentUpon>
     </Compile>
     <Compile Include="frmEdit.cs">
       <SubType>Form</SubType>
@@ -102,8 +114,14 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="frmAddMember.resx">
+      <DependentUpon>frmAddMember.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmCTPhieu.resx">
       <DependentUpon>frmCTPhieu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmDSThanhVien.resx">
+      <DependentUpon>frmDSThanhVien.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmEdit.resx">
       <DependentUpon>frmEdit.cs</DependentUpon>

@@ -5,7 +5,7 @@ GO
 
 -- =============== Bảng Người (cha) =================
 CREATE TABLE Nguoi (
-    maNguoi VARCHAR(10) PRIMARY KEY,
+    maNguoi INT IDENTITY(1,1) PRIMARY KEY,  -- Tự tăng từ 1
     hoTen NVARCHAR(100) NOT NULL,
     gioiTinh NVARCHAR(10) CHECK (gioiTinh IN (N'Nam',N'Nữ')),
     ngaySinh DATE CHECK (ngaySinh <= GETDATE()),
@@ -21,7 +21,7 @@ GO
 -- =============== Bảng Độc giả (con) =================
 CREATE TABLE DocGia (
     maDocGia VARCHAR(14) PRIMARY KEY,
-    maNguoi VARCHAR(10) UNIQUE NOT NULL
+    maNguoi INT UNIQUE NOT NULL
         FOREIGN KEY REFERENCES Nguoi(maNguoi),
     ngayDangKy DATE DEFAULT GETDATE(),
     hanTaiKhoan DATE
@@ -31,7 +31,7 @@ GO
 -- =============== Bảng Nhân viên (con) =================
 CREATE TABLE NhanVien (
     maNhanVien VARCHAR(14) PRIMARY KEY,
-    maNguoi VARCHAR(10) UNIQUE NOT NULL
+    maNguoi INT UNIQUE NOT NULL
         FOREIGN KEY REFERENCES Nguoi(maNguoi),
     chucVu NVARCHAR(50) NULL,
     ngayVaoLam DATE DEFAULT GETDATE(),
@@ -40,9 +40,10 @@ CREATE TABLE NhanVien (
 GO
 
 -- =============== Bảng Tài khoản (nếu cần login) =================
+
 CREATE TABLE TaiKhoan (
     maTaiKhoan INT PRIMARY KEY IDENTITY(1,1),
-    maNguoi VARCHAR(10) NOT NULL UNIQUE
+    maNguoi INT NOT NULL UNIQUE
         FOREIGN KEY REFERENCES Nguoi(maNguoi),
     userName VARCHAR(100) UNIQUE NOT NULL,
     passWord VARCHAR(100) NOT NULL,
@@ -123,7 +124,7 @@ BEGIN
 END;
 GO
 
-CREATE TRIGGER trg_InsertNguoi
+CREATE OR ALTER TRIGGER trg_InsertNguoi
 ON Nguoi
 AFTER INSERT
 AS
@@ -133,7 +134,7 @@ BEGIN
     -- Thêm vào bảng Độc giả nếu vaiTro = 'guest'
     INSERT INTO DocGia(maDocGia, maNguoi, ngayDangKy, hanTaiKhoan)
     SELECT 
-        'DG' + i.maNguoi,   -- bạn có thể đổi cách sinh mã
+        'DG' + CAST(i.maNguoi AS VARCHAR(10)),   -- ép INT sang chuỗi
         i.maNguoi,
         GETDATE(),
         DATEADD(MONTH, 3, GETDATE())  
@@ -143,11 +144,11 @@ BEGIN
     -- Thêm vào bảng Nhân viên nếu vaiTro = 'staff' hoặc 'admin'
     INSERT INTO NhanVien(maNhanVien, maNguoi, chucVu, ngayVaoLam, luong)
     SELECT 
-        'NV' + i.maNguoi,   -- bạn có thể đổi cách sinh mã
+        'NV' + CAST(i.maNguoi AS VARCHAR(10)),   -- ép INT sang chuỗi
         i.maNguoi,
-        i.vaiTro,           -- mặc định để vai trò làm chức vụ
+        i.vaiTro,           
         GETDATE(),
-        0                   -- lương mặc định = 0
+        0                   
     FROM inserted i
     WHERE i.vaiTro IN (N'staff', N'admin');
 END;
@@ -345,10 +346,32 @@ BEGIN
 END
 GO
 
-DROP TRIGGER TRG_TaiKhoan_Insert_AI;
-DROP TRIGGER TRG_TaiKhoan_Delete_AD;
-DROP TRIGGER TRG_TaiKhoan_Update_AU;
 --================ Stored Procedure ================
+CREATE OR ALTER PROCEDURE sp_ThemDocGia
+    @hoTen NVARCHAR(100),
+    @gioiTinh NVARCHAR(10),
+    @ngaySinh DATE,
+    @diaChi NVARCHAR(MAX),
+    @SDT VARCHAR(11),
+    @Email NVARCHAR(100),
+    @CCCD NVARCHAR(20)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        INSERT INTO Nguoi (hoTen, gioiTinh, ngaySinh, diaChi, SDT, email, cccd, vaiTro)
+        VALUES (@hoTen, @gioiTinh, @ngaySinh, @diaChi, @SDT, @Email, @CCCD, N'guest');
+
+        PRINT N'Thêm độc giả thành công!';
+    END TRY
+    BEGIN CATCH
+        DECLARE @ErrMsg NVARCHAR(4000) = ERROR_MESSAGE();
+        RAISERROR(@ErrMsg, 16, 1);
+    END CATCH
+END;
+GO
+
 CREATE OR ALTER PROCEDURE sp_Login
     @Username NVARCHAR(50),
     @Password NVARCHAR(50)
@@ -929,6 +952,7 @@ END;
 GO
 
 
+
 CREATE OR ALTER PROCEDURE sp_DanhSachPhieuQuaHan
 AS
 BEGIN
@@ -985,7 +1009,13 @@ BEGIN
     SELECT * FROM v_PhieuMuon;
 END;
 GO
-
+-- Thủ tục gọi view v_DanhsachThanhVien
+CREATE OR ALTER PROCEDURE sp_XemDanhsachThanhVien
+AS
+BEGIN
+    SELECT * FROM v_DanhsachThanhVien;
+END;
+GO
 -- Thủ tục gọi view v_DocGiaThongTin
 CREATE OR ALTER PROCEDURE sp_XemDocGiaThongTin
 AS
@@ -1038,6 +1068,7 @@ BEGIN
     FROM v_ThongTinTaiKhoan_ChiTiet
     WHERE userName = @userName;
 END;
+GO
 
 --============= Functions ===============
 -- Số phiếu đang mượn
@@ -1196,6 +1227,28 @@ AS
 BEGIN
     RETURN (SELECT COUNT(*) FROM DocGia)
 END
+GO
+
+--Lấy thông tin phiếu
+CREATE OR ALTER FUNCTION fn_GetThongTinPhieu (@soPhieu INT)
+RETURNS TABLE
+AS
+RETURN
+(
+    SELECT 
+		pm.soPhieu,
+        pm.maDocGia,
+        pm.maNhanVien,
+        dg.maNguoi,
+        nd.hoTen AS hoTen,
+		pm.ngayHenTra,
+        pm.ngayMuon
+    FROM PhieuMuon pm
+    INNER JOIN DocGia dg ON pm.maDocGia = dg.maDocGia
+    INNER JOIN Nguoi nd ON dg.maNguoi = nd.maNguoi
+    INNER JOIN NhanVien nv ON pm.maNhanVien = nv.maNhanVien
+    WHERE pm.soPhieu = @soPhieu
+);
 GO
 
 CREATE OR ALTER FUNCTION fn_DanhSachPhieuQuaHanTheoKhoangNgay
@@ -1486,6 +1539,7 @@ SELECT
     n.ngaySinh
 FROM TaiKhoan tk
 LEFT JOIN Nguoi n ON tk.maNguoi = n.maNguoi;
+GO
 
 CREATE OR ALTER VIEW v_DsChiTietPhieuMuon
 AS
@@ -1502,43 +1556,34 @@ FROM PhieuMuon pm
 JOIN CTPhieuMuon ct ON pm.soPhieu = ct.soPhieu;
 GO
 
+CREATE OR ALTER VIEW v_DanhSachThanhVien
+AS
+SELECT 
+    maNguoi,
+    hoTen,
+    gioiTinh,
+    ngaySinh,
+    diaChi,
+    SDT,
+    email,
+    cccd,
+    vaiTro
+FROM Nguoi
+WHERE vaiTro = N'guest';
+GO
+
 
  --================== Phân Quyền ====================
-USE master;
-GO
--- 1. Tạo Login ở mức Server
-CREATE LOGIN lib_admin WITH PASSWORD = 'admin123';
-CREATE LOGIN lib_staff WITH PASSWORD = 'staff123';
-CREATE LOGIN lib_guest WITH PASSWORD = 'guest123';
-GO
-
-USE QLThuVien;
-GO
-
--- 2. Tạo User trong database map với Login
-CREATE USER user_admin FOR LOGIN lib_admin;
-CREATE USER user_staff FOR LOGIN lib_staff;
-CREATE USER user_guest FOR LOGIN lib_guest;
-GO
-
--- 3. Tạo Role (nếu chưa có)
 CREATE ROLE AdminRole;
 CREATE ROLE StaffRole;
 CREATE ROLE GuestRole;
 GO
 
--- 4. Gán User vào Role
-ALTER ROLE AdminRole ADD MEMBER user_admin;
-ALTER ROLE StaffRole ADD MEMBER user_staff;
-ALTER ROLE GuestRole ADD MEMBER user_guest;
-GO
-
--- 5. Phân quyền cho từng Role
 /* --- AdminRole: toàn quyền --- */
 GRANT CONTROL ON DATABASE::QLThuVien TO AdminRole;
 
-
 /* --- StaffRole: quyền nghiệp vụ --- */
+GRANT ALTER ANY USER TO StaffRole;
 GRANT EXECUTE ON OBJECT::sp_MuonSach TO StaffRole;
 GRANT EXECUTE ON OBJECT::sp_ChinhSuaPhieuMuon TO StaffRole;
 GRANT EXECUTE ON OBJECT::sp_TaoTaiKhoanDocGia TO StaffRole;
@@ -1555,10 +1600,15 @@ GRANT EXECUTE ON OBJECT::sp_Login TO StaffRole;
 GRANT EXECUTE ON OBJECT::sp_GetThongTinTaiKhoan_ChiTiet_ByID TO StaffRole;
 GRANT EXECUTE ON OBJECT::sp_XemDsChiTietPhieuMuon TO StaffRole;
 GRANT EXECUTE ON OBJECT::sp_DoiMatKhau TO StaffRole;
+GRANT EXECUTE ON OBJECT::sp_ThemDocGia TO StaffRole;
+GRANT EXECUTE ON OBJECT::sp_XemDanhSachThanhVien TO StaffRole;
 
 -- Các function / view Staff cần SELECT hoặc EXECUTE
 GRANT SELECT ON OBJECT::fn_DanhSachPhieuQuaHanTheoKhoangNgay TO StaffRole;
-GRANT SELECT ON OBJECT::fn_GetThongTinPhieu TO StaffRole;
+
+GRANT ALTER ANY DATABASE TO dien;
+--GRANT SELECT ON OBJECT::fn_GetThongTinPhieu TO StaffRole;
+GRANT INSERT, SELECT ON dbo.TaiKhoan TO StaffRole;
 GRANT SELECT ON OBJECT::fn_SachDangMuon TO StaffRole;
 GRANT SELECT ON OBJECT::fn_SachTheoTinhTrang TO StaffRole;
 GRANT SELECT ON OBJECT::fn_SachTheoTinhTrang_TimKiem TO StaffRole;
@@ -1568,7 +1618,9 @@ GRANT SELECT ON OBJECT::fn_TimKiemPhieuMuon TO StaffRole;
 GRANT SELECT ON OBJECT::fn_TimKiemTaiKhoan TO StaffRole;
 GRANT SELECT ON OBJECT::fn_LayDanhSachTacGia TO StaffRole;
 GRANT SELECT ON OBJECT::fn_LayDanhSachTheLoai TO StaffRole;
+GRANT SELECT ON OBJECT::fn_GetThongTinPhieu TO StaffRole;
 
+GRANT EXECUTE ON OBJECT::fn_GetMaNhanVien TO StaffRole;
 GRANT EXECUTE ON OBJECT::fn_ThongKe_DocGia_DangMuon TO StaffRole;
 GRANT EXECUTE ON OBJECT::fn_ThongKe_DocGia_Tong TO StaffRole;
 GRANT EXECUTE ON OBJECT::fn_ThongKe_DocGia_ViPham TO StaffRole;
@@ -1585,9 +1637,10 @@ GRANT SELECT ON OBJECT::v_CTPhieuMuon TO StaffRole;
 GRANT SELECT ON OBJECT::v_CuonSach_ChiTiet TO StaffRole;
 GRANT SELECT ON OBJECT::v_DocGiaThongTin TO StaffRole;
 GRANT SELECT ON OBJECT::v_TaiKhoan TO StaffRole;
-GRANT SELECT ON OBJECT::v_TaiKhoanNguoi TO StaffRole;
 GRANT SELECT ON OBJECT::v_ThongTinTaiKhoan_ChiTiet TO StaffRole;
 GRANT SELECT ON OBJECT::v_DsChiTietPhieuMuon TO StaffRole;
+GRANT SELECT ON OBJECT::v_DanhsachThanhVien TO StaffRole;
+GRANT SELECT ON OBJECT::v_PhieuMuon TO StaffRole;
 
 /* --- GuestRole: chỉ tra cứu --- */
 GRANT EXECUTE ON OBJECT::sp_Login TO GuestRole;
@@ -1603,35 +1656,38 @@ GRANT SELECT ON OBJECT::fn_LayDanhSachTheLoai TO GuestRole;
 
 --============================ Data ===============================
 -- Table Nguoi
-INSERT INTO Nguoi (maNguoi, hoTen, gioiTinh, ngaySinh, diaChi, SDT, email, cccd, vaiTro)
+INSERT INTO Nguoi (hoTen, gioiTinh, ngaySinh, diaChi, SDT, email, cccd, vaiTro)
 VALUES
 -- 1 Admin
-('001', N'Vũ Quốc Trung', N'Nam', '2005-05-15', N'Hòa Bắc Di Linh Lâm Đồng', '0912345678', 'an.admin@example.com', '012345678901', N'admin'),
+(N'Vũ Quốc Trung', N'Nam', '2005-05-15', N'Hòa Bắc Di Linh Lâm Đồng', '0912345678', 'an.admin@example.com', '012345678901', N'admin'),
 
 -- 3 Staff
-('002', N'Nguyễn Lâm Tấn', N'Nam', '2005-03-20', N'Quận 9 Tp.Thủ Đức', '0923456789', 'tan.staff1@example.com', '123456789012', N'staff'),
-('003', N'Nguyễn Kim Điền', N'Nam', '2005-07-10', N'Đình Phong Phú Quận 9 Tp.Thủ Đức', '0934567890', 'dien.staff2@example.com', '234567890123', N'staff'),
-('004', N'Phạm Quốc Việt', N'Nam', '2005-11-25', N'Quận 1 Tp.Hồ Chí Minh', '0945678901', 'viet.staff3@example.com', '345678901234', N'staff'),
+( N'Nguyễn Lâm Tấn', N'Nam', '2005-03-20', N'Quận 9 Tp.Thủ Đức', '0923456789', 'tan.staff1@example.com', '123456789012', N'staff'),
+(N'Nguyễn Kim Điền', N'Nam', '2005-07-10', N'Đình Phong Phú Quận 9 Tp.Thủ Đức', '0934567890', 'dien.staff2@example.com', '234567890123', N'staff'),
+( N'Phạm Quốc Việt', N'Nam', '2005-11-25', N'Quận 1 Tp.Hồ Chí Minh', '0945678901', 'viet.staff3@example.com', '345678901234', N'staff'),
 
 -- 6 Guest
-('005', N'Trần Lê Quốc Đại', N'Nam', '2005-01-01', N'Ba Đình Hà Nội', '0956789012', 'dai.guest@example.com', '456789012345', N'guest'),
-('006', N'Vũ Lê Minh', N'Nữ', '2003-02-15', N'Quận 10 Hồ Chí Minh', '0967890123', 'minh.guest@example.com', '567890123456', N'guest'),
-('007', N'Đỗ Văn Nam', N'Nam', '1999-08-20', N'Cần Thơ', '0978901234', 'nam.guest@example.com', '678901234567', N'guest'),
-('008', N'Vũ Thị Hương', N'Nữ', '2002-04-30', N'Cầu Giấy Hà Nội', '0989012345', 'huong.guest@example.com', '789012345678', N'guest'),
-('009', N'Bùi Tấn Hảo', N'Nam', '2003-12-12', N'Đà Nẵng', '0990123456', 'hao.guest@example.com', '890123456789', N'guest'),
-('010', N'Nguyễn Thị Kim', N'Nữ', '2001-09-09', N'Hải Dương', '0901234567', 'kim.guest@example.com', '901234567890', N'guest');
+( N'Trần Lê Quốc Đại', N'Nam', '2005-01-01', N'Ba Đình Hà Nội', '0956789012', 'dai.guest@example.com', '456789012345', N'guest'),
+( N'Vũ Lê Minh', N'Nữ', '2003-02-15', N'Quận 10 Hồ Chí Minh', '0967890123', 'minh.guest@example.com', '567890123456', N'guest'),
+( N'Đỗ Văn Nam', N'Nam', '1999-08-20', N'Cần Thơ', '0978901234', 'nam.guest@example.com', '678901234567', N'guest'),
+( N'Vũ Thị Hương', N'Nữ', '2002-04-30', N'Cầu Giấy Hà Nội', '0989012345', 'huong.guest@example.com', '789012345678', N'guest'),
+( N'Bùi Tấn Hảo', N'Nam', '2003-12-12', N'Đà Nẵng', '0990123456', 'hao.guest@example.com', '890123456789', N'guest'),
+(N'Nguyễn Thị Kim', N'Nữ', '2001-09-09', N'Hải Dương', '0901234567', 'kim.guest@example.com', '901234567890', N'guest');
 GO
 
 --Tạo sẵn tài khoản admin và staff (các tài khoản đọc giả sẽ được phân quyền cho admin hoặc staff tạo)
 INSERT INTO TaiKhoan (maNguoi, userName, passWord, vaiTro)
-VALUES ('001', 'trung', '123', 'admin');
+VALUES ('11', 'trung', '123', 'admin');
 INSERT INTO TaiKhoan (maNguoi, userName, passWord, vaiTro)
-VALUES ('002', 'tan', '123', 'staff');
+VALUES ('12', 'tan', '123', 'staff');
 INSERT INTO TaiKhoan (maNguoi, userName, passWord, vaiTro)
-VALUES ('003', 'dien', '123', 'staff');
-INSERT INTO TaiKhoan (maNguoi, userName, passWord, vaiTro)
-VALUES ('004', 'viet', '123', 'staff');
+VALUES ('13', 'dien', '123', 'staff');
 
+USE master;
+GO
+GRANT ALTER ANY LOGIN TO dien;
+GRANT ALTER ANY LOGIN TO trung;
+GRANT ALTER ANY LOGIN TO tan;
 --Tựa sách
 INSERT INTO TuaSach (tenTuaSach, tacGia, theLoai, nhaXuatBan, namXuatBan, donGia)
 VALUES
@@ -1655,47 +1711,47 @@ GO
 --Cuốn sách
 -- Tủ 1
 INSERT INTO CuonSach (maTuaSach, tinhTrang, viTri) VALUES
-(7, N'Có sẵn', N'Tủ 1 - Kệ 1'),
-(7, N'Có sẵn', N'Tủ 1 - Kệ 1'),
-(7, N'Có sẵn', N'Tủ 1 - Kệ 1'),
-(7, N'Có sẵn', N'Tủ 1 - Kệ 1'),
+(1, N'Có sẵn', N'Tủ 1 - Kệ 1'),
+(1, N'Có sẵn', N'Tủ 1 - Kệ 1'),
+(1, N'Có sẵn', N'Tủ 1 - Kệ 1'),
+(1, N'Có sẵn', N'Tủ 1 - Kệ 1'),
 
-(8, N'Có sẵn', N'Tủ 1 - Kệ 2'),
-(8, N'Có sẵn', N'Tủ 1 - Kệ 2'),
-(8, N'Có sẵn', N'Tủ 1 - Kệ 2'),
-(8, N'Có sẵn', N'Tủ 1 - Kệ 2'),
+(2, N'Có sẵn', N'Tủ 1 - Kệ 2'),
+(2, N'Có sẵn', N'Tủ 1 - Kệ 2'),
+(2, N'Có sẵn', N'Tủ 1 - Kệ 2'),
+(2, N'Có sẵn', N'Tủ 1 - Kệ 2'),
 
-(20, N'Có sẵn', N'Tủ 1 - Kệ 3'),
-(20, N'Có sẵn', N'Tủ 1 - Kệ 3'),
-(20, N'Có sẵn', N'Tủ 1 - Kệ 3'),
-(20, N'Có sẵn', N'Tủ 1 - Kệ 3'),
+(3, N'Có sẵn', N'Tủ 1 - Kệ 3'),
+(3, N'Có sẵn', N'Tủ 1 - Kệ 3'),
+(3, N'Có sẵn', N'Tủ 1 - Kệ 3'),
+(3, N'Có sẵn', N'Tủ 1 - Kệ 3'),
 
-(19, N'Có sẵn', N'Tủ 1 - Kệ 4'),
-(19, N'Có sẵn', N'Tủ 1 - Kệ 4'),
-(19, N'Có sẵn', N'Tủ 1 - Kệ 4'),
-(19, N'Có sẵn', N'Tủ 1 - Kệ 4');
+(4, N'Có sẵn', N'Tủ 1 - Kệ 4'),
+(4, N'Có sẵn', N'Tủ 1 - Kệ 4'),
+(4, N'Có sẵn', N'Tủ 1 - Kệ 4'),
+(4, N'Có sẵn', N'Tủ 1 - Kệ 4');
 
 -- Tủ 2
 INSERT INTO CuonSach (maTuaSach, tinhTrang, viTri) VALUES
-(18, N'Có sẵn', N'Tủ 2 - Kệ 1'),
-(18, N'Có sẵn', N'Tủ 2 - Kệ 1'),
-(18, N'Có sẵn', N'Tủ 2 - Kệ 1'),
-(18, N'Có sẵn', N'Tủ 2 - Kệ 1'),
+(5, N'Có sẵn', N'Tủ 2 - Kệ 1'),
+(5, N'Có sẵn', N'Tủ 2 - Kệ 1'),
+(5, N'Có sẵn', N'Tủ 2 - Kệ 1'),
+(5, N'Có sẵn', N'Tủ 2 - Kệ 1'),
 
-(18, N'Có sẵn', N'Tủ 2 - Kệ 2'),
-(18, N'Có sẵn', N'Tủ 2 - Kệ 2'),
-(18, N'Có sẵn', N'Tủ 2 - Kệ 2'),
-(18, N'Có sẵn', N'Tủ 2 - Kệ 2'),
+(6, N'Có sẵn', N'Tủ 2 - Kệ 2'),
+(6, N'Có sẵn', N'Tủ 2 - Kệ 2'),
+(6, N'Có sẵn', N'Tủ 2 - Kệ 2'),
+(6, N'Có sẵn', N'Tủ 2 - Kệ 2'),
 
-(17, N'Có sẵn', N'Tủ 2 - Kệ 3'),
-(17, N'Có sẵn', N'Tủ 2 - Kệ 3'),
-(17, N'Có sẵn', N'Tủ 2 - Kệ 3'),
-(17, N'Có sẵn', N'Tủ 2 - Kệ 3'),
+(7, N'Có sẵn', N'Tủ 2 - Kệ 3'),
+(7, N'Có sẵn', N'Tủ 2 - Kệ 3'),
+(7, N'Có sẵn', N'Tủ 2 - Kệ 3'),
+(7, N'Có sẵn', N'Tủ 2 - Kệ 3'),
 
-(16, N'Có sẵn', N'Tủ 2 - Kệ 4'),
-(16, N'Có sẵn', N'Tủ 2 - Kệ 4'),
-(16, N'Có sẵn', N'Tủ 2 - Kệ 4'),
-(16, N'Có sẵn', N'Tủ 2 - Kệ 4');
+(8, N'Có sẵn', N'Tủ 2 - Kệ 4'),
+(8, N'Có sẵn', N'Tủ 2 - Kệ 4'),
+(8, N'Có sẵn', N'Tủ 2 - Kệ 4'),
+(8, N'Có sẵn', N'Tủ 2 - Kệ 4');
 
 -- Tủ 3
 INSERT INTO CuonSach (maTuaSach, tinhTrang, viTri) VALUES
@@ -1735,3 +1791,5 @@ INSERT INTO CuonSach (maTuaSach, tinhTrang, viTri) VALUES
 (15, N'Có sẵn', N'Tủ 4 - Kệ 3'),
 (15, N'Có sẵn', N'Tủ 4 - Kệ 3'),
 (15, N'Có sẵn', N'Tủ 4 - Kệ 3');
+
+

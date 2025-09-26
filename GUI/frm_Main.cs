@@ -447,7 +447,6 @@ namespace GUI
 
         private void btnMuonSach_Click(object sender, EventArgs e)
         {
-
             using (frmMuonSach f = new frmMuonSach())
             {
                 if (f.ShowDialog() == DialogResult.OK)
@@ -732,6 +731,23 @@ namespace GUI
             {
                 MessageBox.Show("Đổi mật khẩu thất bại: " + errorMessage, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void btnThemNguoi_Click(object sender, EventArgs e)
+        {
+            using (frmAddMember f = new frmAddMember())
+            {
+                if (f.ShowDialog() == DialogResult.OK)
+                {
+                    PanelTaiKhoan_Load(); 
+                }
+            }
+        }
+
+        private void btnDsMember_Click(object sender, EventArgs e)
+        {
+            frmDSThanhVien frm = new frmDSThanhVien();
+            frm.ShowDialog();
         }
     }
 }
