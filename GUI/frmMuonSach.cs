@@ -266,7 +266,6 @@ namespace GUI
                             da.Fill(dt);
                         }
 
-                        // 4. Kết quả
                         if (dt.Rows.Count > 0)
                         {
                             int soPhieuMoi = Convert.ToInt32(dt.Rows[0]["SoPhieuMoi"]);

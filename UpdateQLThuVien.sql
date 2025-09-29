@@ -1185,7 +1185,7 @@ BEGIN
     RETURN (SELECT COUNT(*) FROM CuonSach)
 END
 GO
-
+-- Tổng số độc giả mượn sách
 CREATE FUNCTION fn_ThongKe_DocGia_DangMuon(@tuNgay DATE, @denNgay DATE)
 RETURNS INT
 AS
@@ -1585,10 +1585,8 @@ GRANT CONTROL ON DATABASE::QLThuVien TO AdminRole;
 /* --- StaffRole: quyền nghiệp vụ --- */
 GRANT ALTER ANY USER TO StaffRole;
 GRANT EXECUTE ON OBJECT::sp_MuonSach TO StaffRole;
-GRANT EXECUTE ON OBJECT::sp_ChinhSuaPhieuMuon TO StaffRole;
 GRANT EXECUTE ON OBJECT::sp_TaoTaiKhoanDocGia TO StaffRole;
 GRANT EXECUTE ON OBJECT::sp_TraTungSach TO StaffRole;
-GRANT EXECUTE ON OBJECT::sp_ChinhSuaCTPhieuMuon TO StaffRole;
 GRANT EXECUTE ON OBJECT::sp_DanhSachPhieuQuaHan TO StaffRole;
 GRANT EXECUTE ON OBJECT::sp_XemPhieuMuon TO StaffRole;
 GRANT EXECUTE ON OBJECT::sp_XemCuonSach_Filter TO StaffRole;
@@ -1606,7 +1604,6 @@ GRANT EXECUTE ON OBJECT::sp_XemDanhSachThanhVien TO StaffRole;
 -- Các function / view Staff cần SELECT hoặc EXECUTE
 GRANT SELECT ON OBJECT::fn_DanhSachPhieuQuaHanTheoKhoangNgay TO StaffRole;
 
-GRANT ALTER ANY DATABASE TO dien;
 --GRANT SELECT ON OBJECT::fn_GetThongTinPhieu TO StaffRole;
 GRANT INSERT, SELECT ON dbo.TaiKhoan TO StaffRole;
 GRANT SELECT ON OBJECT::fn_SachDangMuon TO StaffRole;

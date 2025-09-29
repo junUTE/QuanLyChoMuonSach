@@ -130,6 +130,7 @@ namespace GUI
         }
         private void LoadThongTinPhieu()
         {
+            var tk = Session.CurrentUser;
             DataTable dt = funcBll.GetThongTinPhieu(_soPhieu);
             if (dt == null || dt.Rows.Count == 0)
                 return;
@@ -141,6 +142,7 @@ namespace GUI
             txtMaDocGia.Text = r["maDocGia"]?.ToString();
             txtTenDocGia.Text = r["hoTen"]?.ToString();
             txtMaNhanVien.Text = r["maNhanVien"]?.ToString();
+            txtNhanVienSuaPhieu.Text = funcBll.GetMaNhanVien(tk.maNguoi);
 
             if (r["ngayMuon"] != DBNull.Value)
                 dateMuon.Value = Convert.ToDateTime(r["ngayMuon"]);

@@ -49,6 +49,8 @@
             this.btnSearchSach = new System.Windows.Forms.Button();
             this.btnDoiSach = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.txtNhanVienSuaPhieu = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -128,7 +130,7 @@
             // 
             this.lblMaNV.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMaNV.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.lblMaNV.Location = new System.Drawing.Point(393, 82);
+            this.lblMaNV.Location = new System.Drawing.Point(322, 82);
             this.lblMaNV.Name = "lblMaNV";
             this.lblMaNV.Size = new System.Drawing.Size(88, 31);
             this.lblMaNV.TabIndex = 7;
@@ -137,10 +139,10 @@
             // txtMaNhanVien
             // 
             this.txtMaNhanVien.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMaNhanVien.Location = new System.Drawing.Point(542, 79);
+            this.txtMaNhanVien.Location = new System.Drawing.Point(416, 79);
             this.txtMaNhanVien.Name = "txtMaNhanVien";
             this.txtMaNhanVien.ReadOnly = true;
-            this.txtMaNhanVien.Size = new System.Drawing.Size(138, 34);
+            this.txtMaNhanVien.Size = new System.Drawing.Size(57, 34);
             this.txtMaNhanVien.TabIndex = 8;
             // 
             // lblNgayHenTra
@@ -375,10 +377,31 @@
             this.btnClose.Text = "    Đóng";
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
+            // label4
+            // 
+            this.label4.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.label4.Location = new System.Drawing.Point(511, 79);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(123, 31);
+            this.label4.TabIndex = 27;
+            this.label4.Text = "NV sửa phiếu:";
+            // 
+            // txtNhanVienSuaPhieu
+            // 
+            this.txtNhanVienSuaPhieu.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtNhanVienSuaPhieu.Location = new System.Drawing.Point(636, 76);
+            this.txtNhanVienSuaPhieu.Name = "txtNhanVienSuaPhieu";
+            this.txtNhanVienSuaPhieu.ReadOnly = true;
+            this.txtNhanVienSuaPhieu.Size = new System.Drawing.Size(61, 34);
+            this.txtNhanVienSuaPhieu.TabIndex = 28;
+            // 
             // frmEdit
             // 
             this.ClientSize = new System.Drawing.Size(1046, 725);
             this.ControlBox = false;
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.txtNhanVienSuaPhieu);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.txtSearchSach);
             this.Controls.Add(this.btnSearchSach);
@@ -455,5 +478,7 @@
         private System.Windows.Forms.Button btnSearchSach;
         private System.Windows.Forms.Button btnDoiSach;
         private System.Windows.Forms.Button btnClose;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox txtNhanVienSuaPhieu;
     }
 }
